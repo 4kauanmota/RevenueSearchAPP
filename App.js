@@ -1,15 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 
-import CategoryScreen from './screens/CategoryScreen';
+import StackNavigation from "./components/navigation/StackNavigation";
+import FavoriteContextProvider from "./store/context/favoriteContext";
 
 export default function App() {
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
 
       <View style={styles.container}>
-        <CategoryScreen />  
+
+        <FavoriteContextProvider>
+          <NavigationContainer>
+            <StackNavigation />
+          </NavigationContainer>
+        </FavoriteContextProvider>
+        
       </View>
     </>
   );
@@ -18,8 +26,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

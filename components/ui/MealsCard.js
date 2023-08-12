@@ -1,11 +1,21 @@
 import { Pressable, StyleSheet, View, Image, Text } from "react-native";
 
+import Title from "./Title";
 import colors from "../../constants/colors";
+import { useNavigation } from "@react-navigation/native";
 
-function MealsCard({imageUrl, title, duration, complexity, affordability, onPress}) {
+function MealsCard({id, imageUrl, title, duration, complexity, affordability, onPress}) {
+  const navigation = useNavigation();
+
+  function MealNavigationHandler() {
+    navigation.navigate('Food', {
+      foodId: id,
+    });
+  }
+
   return (
     <View style={styles.allContainer}>
-      <Pressable style={styles.container} onPress={onPress}>
+      <Pressable style={styles.container} onPress={MealNavigationHandler}>
         <View style={styles.imageContainer}>
           <Image
             source={{
@@ -16,13 +26,13 @@ function MealsCard({imageUrl, title, duration, complexity, affordability, onPres
         </View>
 
         <View style={styles.titleContainer}> 
-          <Text style={[styles.title]}>{title.toUpperCase()}</Text>
+          <Title textStyle={{fontSize: 16}}>{title.toUpperCase()}</Title>
         </View>
 
         <View style={styles.descriptionContainer}>
-            <Text>{duration}m</Text> 
-            <Text>{complexity.toUpperCase()}</Text> 
-            <Text>{affordability.toUpperCase()}</Text>
+            <Text style={styles.description}>{duration}min</Text> 
+            <Text style={styles.description}>{complexity.toUpperCase()}</Text> 
+            <Text style={styles.description}>{affordability.toUpperCase()}</Text>
         </View>
       </Pressable>
     </View>
@@ -34,12 +44,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginTop: 20,
+    elevation: 10
   },
 
   container: {
     width: '80%',
     height: 250,
-    backgroundColor: colors.white,
+    backgroundColor: colors.black,
     borderRadius: 8,
     overflow: 'hidden'
   },
@@ -60,16 +71,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  title: {
-    fontWeight: 'bold',
-
-  },
-
   descriptionContainer: {
     height: '13%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
+  },
+
+  description: {
+    color: colors.secondary,
+    fontWeight: 'bold',
   }
 })
 
